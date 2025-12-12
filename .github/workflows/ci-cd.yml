@@ -6,13 +6,13 @@ name: Build and Deploy
 # 触发条件：推送到 main 分支时触发
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 # 环境变量
 env:
-  NODE_VERSION: '18'
+  NODE_VERSION: "20"
 
 # 工作流程
 jobs:
@@ -20,42 +20,42 @@ jobs:
   build-and-deploy:
     name: 构建和部署
     runs-on: ubuntu-latest
-    
+
     # 步骤定义
     steps:
-    # 步骤1：检出代码
-    - name: 检出代码
-      uses: actions/checkout@v4
-    
-    # 步骤2：设置 Node.js 环境
-    - name: 设置 Node.js 环境
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
-    
-    # 步骤3：安装项目依赖
-    - name: 安装依赖
-      run: npm ci
-    
-    # 步骤4：运行类型检查和构建
-    - name: 构建项目
-      run: npm run build
-    
-    # 步骤5：部署到 GitHub Pages（仅在推送到 main 分支时）
-    - name: 部署到 GitHub Pages
-      if: github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
-    
-    # 步骤6：构建状态通知
-    - name: 构建完成
-      run: |
-        if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-          echo "✅ 构建成功并已部署到 GitHub Pages"
-          echo "🌐 网站地址: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
-        else
-          echo "✅ PR 构建成功"
-        fi
+      # 步骤1：检出代码
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      # 步骤2：设置 Node.js 环境
+      - name: 设置 Node.js 环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      # 步骤3：安装项目依赖
+      - name: 安装依赖
+        run: npm ci
+
+      # 步骤4：运行类型检查和构建
+      - name: 构建项目
+        run: npm run build
+
+      # 步骤5：部署到 GitHub Pages（仅在推送到 main 分支时）
+      - name: 部署到 GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+
+      # 步骤6：构建状态通知
+      - name: 构建完成
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "✅ 构建成功并已部署到 GitHub Pages"
+            echo "🌐 网站地址: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          else
+            echo "✅ PR 构建成功"
+          fi
