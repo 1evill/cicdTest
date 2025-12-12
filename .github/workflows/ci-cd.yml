@@ -5,7 +5,7 @@ name: Build and Deploy
 
 # 设置必要的权限
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
