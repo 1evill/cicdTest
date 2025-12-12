@@ -3,6 +3,12 @@
 
 name: Build and Deploy
 
+# 设置必要的权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 # 触发条件：推送到 main 分支时触发
 on:
   push:
@@ -49,6 +55,9 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          # 解决权限问题
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
 
       # 步骤6：构建状态通知
       - name: 构建完成
