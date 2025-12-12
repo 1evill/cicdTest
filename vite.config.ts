@@ -4,6 +4,8 @@ import vue from "@vitejs/plugin-vue";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
+  // 设置 GitHub Pages 基础路径
+  base: "/cicdTest/",
   // CI/CD 环境配置
   build: {
     // 构建优化选项
